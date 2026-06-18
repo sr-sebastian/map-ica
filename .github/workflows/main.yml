@@ -5,6 +5,7 @@ on:
     branches:
       - main # Se ejecuta cada vez que subís cambios a main
 
+
 # Permisos necesarios para que Actions pueda escribir en GitHub Pages
 permissions:
   contents: read
