@@ -176,8 +176,15 @@ function Modal({ materia, effectiveMaterias, onClose, t, onSelectOptativa, onRem
 
   if (!materia) return null;
 
-  const prevObjs = (materia.previaturas || []).map(pid => effectiveMaterias.find(m => m.id === pid)).filter(Boolean);
-  const habilitadas = effectiveMaterias.filter(m => m.previaturas && m.previaturas.includes(materia.id));
+// 1. Busqueda segura de objetos de previas (evita errores si m es undefined)
+const prevObjs = (materia.previaturas || [])
+  .map(pid => effectiveMaterias.find(m => m && m.id === pid)) 
+  .filter(Boolean);
+
+// 2. Filtrado seguro de habilitadas (agrega el chequeo 'm &&' para ignorar elementos nulos/comas vacías)
+const habilitadas = effectiveMaterias.filter(m => 
+  m && m.previaturas && m.previaturas.includes(materia.id)
+);
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6" onClick={onClose}>
